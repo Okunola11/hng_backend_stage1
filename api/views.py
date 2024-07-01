@@ -1,5 +1,6 @@
 # Create your views here.
 
+import re
 import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -48,6 +49,8 @@ class WeatherView(APIView):
 
         # Extracting the visitor_name query parameter and using Mark as a fallback
         visitor_name = request.query_params.get('visitor_name', 'Mark')
+        # Regex to remove quotes from query parameter
+        visitor_name = re.sub(r'["\']', '', visitor_name)
 
         greeting = f"Hello, {visitor_name}!, the temperature is {temp} degrees Celsius in {location}"
 
