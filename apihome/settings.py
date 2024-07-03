@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-sl5*0*l7=12j81)l9w3d5z0i@)afgpgd%i0@i&phybt0q!7=qx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'abd1.pythonanywhere.com']
 
 
 # Application definition
@@ -136,9 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Environment env -> 
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-# Ipinfo API Key
-IPINFO_API_KEY = env('IPINFO_API_KEY')
 
 # Open weather API Key
 WEATHER_API_KEY = env('WEATHER_API_KEY')

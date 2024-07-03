@@ -18,31 +18,12 @@ class WeatherView(APIView):
     #     return ip
 
     def get_client_ip(self, request):
-        headers_to_check = [
-            'HTTP_X_FORWARDED_FOR',
-            'HTTP_X_REAL_IP',
-            'HTTP_CLIENT_IP',
-            'HTTP_X_FORWARDED',
-            'HTTP_X_CLUSTER_CLIENT_IP',
-            'HTTP_FORWARDED_FOR',
-            'HTTP_FORWARDED'
-        ]
+        # Method for getting internal IP while using pythonanywhere only
+        ip = request.META.get('HTTP_X_REAL_IP')
+        return ip
 
-        for header in headers_to_check:
-            ip = request.META.get(header)
-            if ip:
-                # Take the first IP address in the list and strip any leading/trailing whitespace
-                ip = ip.split(',')[0].strip()
-                return ip
-
-        # Fall back to the REMOTE_ADDR header
-        return request.META.get('REMOTE_ADDR')
-
-
-    # Getting the location of the IP using IPINFO API 
+    # Getting the location of the IP using IPAPI API 
     def get_location(self, ip):
-        # The API key is stored as an environment variable and extracted in settings.py
-        api_key = settings.IPINFO_API_KEY
         response = requests.get(f'https://ipapi.co/{ip}/json/')
         if response.status_code == 200:
             data = response.json()
